@@ -13,9 +13,8 @@
             Sender = new User();
             Receiver = new User();
         }
-        public InviteRequest(User sender, User receiver)
+        public InviteRequest(User receiver)
         {
-            Sender = sender;
             Receiver = receiver;
             Status = false;
             CreateTime = DateTime.Now;

@@ -7,28 +7,28 @@ namespace GitSimulator
     [TestClass]
     public class UnitTest1
     {
+        private Repository repo = new Repository();
+        private Branch branch = new Branch();
+        private GitFile file = new GitFile();
+        private User member = new User();
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            repo = new Repository()
+            { Id = 1, Name = "Repo"};
+            member = new User()
+            { Id = 1, Name = "tuan" };
+        }
         /// <summary>
         /// Test case: invite member
         /// </summary>
         [TestMethod]
         public void InviteMemberTest()
         {
-            //Create owner and repository
-            var owner = new User()
-            { Id = 1, Name = "John" };
-            var repo = new Repository();
-            repo.Owner = owner;
-
-            //Create receiver and invite request
-            var receiver = new User()
-            { Id = 2, Name = "Hall" };
-            var newInvite = new InviteRequest(owner, receiver);
-
-            //Call RepositoryService to invite member
+            //invite: sent request username from repository
+            //input: repositoryID, username
             var repoService = new RepoService(repo);
-            repoService.InviteMemmber(newInvite);
-
-            //Check request have been sent to receiver
+            repoService.InviteMemmber(member.Id);
             Assert.AreEqual(repo.InviteRequests.Count, 1);
         }
 
@@ -207,6 +207,14 @@ namespace GitSimulator
 
             var result = GitFileService.GetNumbersOfVersionFile(branch, file);
             Assert.AreEqual(2, result);
+        }
+
+        [TestMethod]
+        public void ServiceTest()
+        {
+            var repoService = new RepoService(repo);
+            var result = repoService.GetRepo();
+            Assert.IsNotNull(result);
         }
     }
 }

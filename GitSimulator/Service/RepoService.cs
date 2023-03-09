@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GitSimulator.Service
 {
-    internal class RepoService
+    public class RepoService
     {
         //tao 1 class chua tat ca cac property
         private Repository _repo;
@@ -26,15 +26,30 @@ namespace GitSimulator.Service
             return null;
         }
 
-
-        internal void InviteMemmber(InviteRequest newInvite)
+        internal Repository GetRepo()
         {
-            var result = _repo.Contributors.FirstOrDefault(e => e.Name.Equals(newInvite.Receiver.Name));
-            if (result is null)
+            return _repo;
+        }
+
+
+        internal void InviteMemmber(int userId)
+        {
+            //kiem tra user nay co ton tai trong cai repo nay chua
+            var user = GetUserById(userId);
+            
+            if(_repo.Contributors.FirstOrDefault(e => e.Id.Equals(user.Id)) == null)
             {
-                _repo.InviteRequests.Add(newInvite);
-                SaveChanges();
+                var inviteRequest = new InviteRequest() { Receiver = user, CreateTime = DateTime.UtcNow };
+                _repo.InviteRequests.Add(inviteRequest);
             }
+            
+        }
+
+        private User GetUserById(int userId)
+        {
+            var user = new User();
+            user = _repo.Contributors.FirstOrDefault(e => e.Equals(userId));
+            return user;
         }
 
         internal HashSet<User> RemoveTeamMember(User member1)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GitSimulator.Entity
 {
-    internal class GitFile
+    public class GitFile
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GitSimulator.Entity
 {
-    internal class Commit
+    public class Commit
     {
         public int Id { get; set; }
     }
