@@ -8,10 +8,10 @@
         public User Receiver { get; set; }
         public bool Status { get; set; }
         public DateTime CreateTime { get; set; }
-        public Repository Repository { get; set; }
+        public Repo Repository { get; set; }
         public InviteRequest()
         {
-            Repository = new Repository();
+            Repository = new Repo();
             Receiver = new User();
         }
     }

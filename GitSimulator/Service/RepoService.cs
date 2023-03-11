@@ -5,7 +5,7 @@ namespace GitSimulator.Service
     public class RepoService
     {
 
-        internal List<InviteRequest> InviteMember(Repository? repoId, User? userName)
+        internal List<InviteRequest> InviteMember(Repo? repoId, User? userName)
         {
             var result = new List<InviteRequest>();
 

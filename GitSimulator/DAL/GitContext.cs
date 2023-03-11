@@ -12,7 +12,7 @@ namespace GitSimulator.DAL
     {
         public GitContext(DbContextOptions<GitContext> options) :base() { }
 
-        public DbSet<Repository> Repositories { get; set; }
+        public DbSet<Repo> Repositories { get; set; }
         public DbSet<Branch> Branches { get; set; }
         public DbSet<Commit> Commitments { get;set; }
         public DbSet<GitFile> Files { get; set; }
@@ -26,10 +26,9 @@ namespace GitSimulator.DAL
             base.OnModelCreating(modelBuilder);
 
             //reverse all
-            modelBuilder.Entity<Repository>()
+            modelBuilder.Entity<Repo>()
                 .HasOne(o => o.Owner)
-                .WithMany(c => c.Repositories)
-                .HasForeignKey(k => k.OwnerId);
+                .WithMany(c => c.Repositories);
 
             modelBuilder.Entity<Branch>()
                 .HasOne(p => p.Owner)
@@ -54,16 +53,6 @@ namespace GitSimulator.DAL
             modelBuilder.Entity<User>()
                 .HasMany(o => o.Repositories)
                 .WithMany(c => c.Contributors);
-
-            modelBuilder.Entity<Commit>()
-                .HasMany(o => o.Files)
-                .WithOne(c => c.Commit)
-                .HasForeignKey(k => k.CommitId);
-
-            modelBuilder.Entity<Team>()
-                .HasMany(o => o.Members)
-                .WithOne(c => c.Team)
-                .HasForeignKey(k => k.TeamId);
         }
     }
 }

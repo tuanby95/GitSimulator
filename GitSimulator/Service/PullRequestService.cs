@@ -4,7 +4,7 @@ namespace GitSimulator.Service
 {
     internal static class PullRequestService
     {
-        internal static object ViewPullRequest(Repository repo)
+        internal static object ViewPullRequest(Repo repo)
         {
             throw new NotImplementedException();
         }
