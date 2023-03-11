@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GitSimulator.Entity
+﻿namespace GitSimulator.Entity
 {
     public class Commit
     {
         public int Id { get; set; }
+        public string? Name { get; set; }
+        public HashSet<GitFile> Files { get; set; }
+        public Commit() 
+        {
+            Files = new HashSet<GitFile>();
+        }
     }
 }

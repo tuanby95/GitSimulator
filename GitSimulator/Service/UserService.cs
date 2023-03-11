@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GitSimulator.Entity;
 
 namespace GitSimulator.Service
 {
-    internal static class UserService
+    public class UserService
     {
+        internal User GetUserById(int userId)
+        {
+            var user = new User();
+
+            return user;
+        }
     }
 }

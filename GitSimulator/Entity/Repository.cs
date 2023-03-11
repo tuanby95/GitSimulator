@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GitSimulator.Entity
+﻿namespace GitSimulator.Entity
 {
     public class Repository
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Url { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
         public DateTime CreatedTime { get; set; }
         public HashSet<Branch> Branches { get; set; }
+        public int OwnerId { get; set; }
         public User Owner { get; set; }
         public HashSet<User> Contributors { get; set; }
         public HashSet<GitFile> Files { get; set; }

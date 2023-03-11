@@ -3,21 +3,16 @@
     public class InviteRequest
     {
         public int Id { get; set; }
-        public User Sender { get; set; }
+        public int RepoId { get; set; }
+        public int ReceiverId { get; set; }
         public User Receiver { get; set; }
         public bool Status { get; set; }
         public DateTime CreateTime { get; set; }
-
+        public Repository Repository { get; set; }
         public InviteRequest()
         {
-            Sender = new User();
+            Repository = new Repository();
             Receiver = new User();
-        }
-        public InviteRequest(User receiver)
-        {
-            Receiver = receiver;
-            Status = false;
-            CreateTime = DateTime.Now;
         }
     }
 }

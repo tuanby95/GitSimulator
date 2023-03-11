@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GitSimulator.Entity
+﻿namespace GitSimulator.Entity
 {
     public class PullRequest
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
         public HashSet<Commit> Commits { get; set; }
         public DateTime CreatedDate { get; set; }
         public User Owner { get; set; }
@@ -18,9 +11,13 @@ namespace GitSimulator.Entity
         public Branch FromBranch { get; set; }
         public Branch ToBranch { get; set; }
 
-        public PullRequest() 
+        public PullRequest()
         {
             Commits = new HashSet<Commit>();
+            Owner = new User();
+            Reviewer = new User();
+            FromBranch = new Branch();
+            ToBranch = new Branch();
         }
     }
 }

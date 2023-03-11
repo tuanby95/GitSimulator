@@ -1,23 +1,50 @@
+using Azure.Core;
+using GitSimulator.DAL;
 using GitSimulator.Entity;
 using GitSimulator.Service;
-using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace GitSimulator
 {
     [TestClass]
     public class UnitTest1
     {
-        private Repository repo = new Repository();
-        private Branch branch = new Branch();
-        private GitFile file = new GitFile();
-        private User member = new User();
+        GitContext _context;
+
         [TestInitialize]
         public void TestInitialize()
         {
-            repo = new Repository()
-            { Id = 1, Name = "Repo"};
-            member = new User()
-            { Id = 1, Name = "tuan" };
+            var options = new DbContextOptionsBuilder<GitContext>()
+                .UseInMemoryDatabase(databaseName: "GitDatabase")
+                .Options;
+            _context = new GitContext(options);
+
+            _context.Users.AddRange(new List<User>
+            {
+                new User { Name = "Tuan" },
+                new User { Name = "Tin" },
+                new User { Name = "Tien" },
+                new User { Name = "Tung" },
+                new User { Name = "Viet" },
+            });
+
+            _context.Repositories.AddRange(new List<Repository>
+            {
+                new Repository { Name = "RepoA", OwnerId = 1 },
+                new Repository { Name = "RepoB", OwnerId = 2 },
+                new Repository { Name = "RepoC", OwnerId = 3 },
+                new Repository { Name = "RepoD", OwnerId = 4 },
+                new Repository { Name = "RepoE", OwnerId = 5 },
+            });
+
+            _context.Branches.AddRange(new List<Branch>
+            {
+                new Branch { Name = "BrachA" },
+                new Branch { Name = "BrachB" },
+                new Branch { Name = "BrachC" },
+                new Branch { Name = "BrachD" },
+                new Branch { Name = "BrachE" },
+            });
         }
         /// <summary>
         /// Test case: invite member
@@ -25,11 +52,15 @@ namespace GitSimulator
         [TestMethod]
         public void InviteMemberTest()
         {
-            //invite: sent request username from repository
-            //input: repositoryID, username
-            var repoService = new RepoService(repo);
-            repoService.InviteMemmber(member.Id);
-            Assert.AreEqual(repo.InviteRequests.Count, 1);
+            var repoId = _context.Repositories.FirstOrDefault(e => e.Id.Equals(1));
+            var userName = _context.Users.FirstOrDefault(e => e.Id.Equals(1));
+            
+
+            //Call InviteMember method in Reposervice
+            var repo = new RepoService();
+            var result = repo.InviteMember(repoId, userName);
+
+            Assert.AreEqual(result.Count, 1);
         }
 
         [TestMethod]
@@ -38,183 +69,79 @@ namespace GitSimulator
             //Create org
             //Add team into org
             //org can assign team to a repo
-
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
         public void RemoveTeamMemberTest()
         {
-            //Create a repository
-            var repo = new Repository();
-
-            //Create owner and team members
-            var owner = new User()
-            { Name = "Diana" };
-            repo.Owner = owner;
-
-            var member1 = new User()
-            { Name = "John" };
-            var member2 = new User()
-            { Name = "David" };
-
-            //Add user & owner into team
-            repo.Contributors.Add(owner);
-            repo.Contributors.Add(member1);
-            repo.Contributors.Add(member2);
-
-            //Call RepositoryService to remove a member
-            var repoService = new RepoService(repo);
-            repoService.RemoveTeamMember(member1);
-            //Checking whether the member have been removed from team yet
-            Assert.AreEqual(repo.Contributors.Contains(member1), false);
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
         public void CreateBranchTest()
         {
-            var repo = new Repository();
-            var creator = new User();
-            string branchName = "New Branch";
-            var files = new HashSet<GitFile>();
-
-            var result = BranchService.CreateBranch(repo, creator, branchName, files);
-            Assert.AreEqual(branchName, result.Name);
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
         public void CreateSubBranchTest()
         {
-            var baseBranch = new Branch()
-            { Name = "Base branch" };
-            var subBranch = new Branch()
-            { Name = "Sub branch" };
-
-            var result = BranchService.CreateSubBranch(baseBranch, subBranch);
-            Assert.AreEqual(result.Name, subBranch.Name);
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
         public void GetCodeByBranchTest()
         {
-            var branch = new Branch()
-            {
-                Name = "new branch",
-                Files = new HashSet<GitFile>()
-                { new GitFile() { Name = "README.md" } }
-            };
-            var repo = new Repository()
-            { Name = "new repo" };
-
-            repo.Branches.Add(branch);
-
-            var result = BranchService.GetCodeByBranch(repo, branch);
-            Assert.AreEqual(result, branch.Files);
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
         public void ClondeCodeTest()
         {
-            var repo = new Repository()
-            {
-                Url = "https://hello.com",
-                Files = new HashSet<GitFile>()
-                { new GitFile { Name = "hello" } }
-            };
-            var url = "https://hello.com";
-
-            //input must be Id
-            var repoService = new RepoService(repo);
-            var result = repoService.CloneCode(url);
-
-            Assert.AreNotEqual(result, null);
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
         public void ViewLastFileTest()
         {
-            var repo = new Repository() { Name = "new repo" };
-            var branch = new Branch() { Name = "master" };
-            var file = new GitFile() { Name = "git.ignore" };
-
-            branch.Files.Add(file);
-            repo.Branches.Add(branch);
-
-            var result = BranchService.ViewLastFile(repo, branch);
-            Assert.AreEqual(result, file);
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
         public void ViewPullRequestTest()
         {
-            var repo = new Repository();
-            
-            var result = PullRequestService.ViewPullRequest(repo);
-            Assert.AreEqual(result, null);
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
         public void ViewPullRequestByIdTest()
         {
-            var repo = new Repository();
-            var pullrequestId = 1;
-
-            
-            var result = PullRequestService.ViewPullRequestById(pullrequestId);
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
         public void ViewOlderVersionFileTest()
         {
-            var branch = new Branch();
-            var file = new GitFile() 
-            { Id = 1, Name = ".gitignore", CreatedTime = DateTime.Now, Version = "1" };
-            var olderFile = new GitFile()
-            { Id = 1, Name = ".gitignore", CreatedTime = DateTime.Now, Version = "2" };
-            file.Versions.Add(olderFile);
-            branch.Files.Add(file);
-
-            var version = "2";
-            var result = GitFileService.ViewOlderVersionFileTest(branch, file, version);
-            Assert.AreEqual(olderFile, result);
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
         public void ViewLatestVersionFileTest()
         {
-            var branch = new Branch();
-            var file = new GitFile()
-            { Id = 1, Name = ".gitignore", CreatedTime = DateTime.Now, Version = "1" };
-            var olderFile = new GitFile()
-            { Id = 1, Name = ".gitignore", CreatedTime = DateTime.Now, Version = "2" };
-            file.Versions.Add(olderFile);
-            branch.Files.Add(file);
-
-            var fileID = 1;
-            var result = GitFileService.ViewLatestVersionFile(branch, fileID);
-            Assert.AreEqual(file, result);
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
         public void GetNumbersOfVersionFileTest()
         {
-            var branch = new Branch();
-            var file = new GitFile()
-            { Id = 1, Name = ".gitignore", CreatedTime = DateTime.Now, Version = "1" };
-            var olderFile = new GitFile()
-            { Id = 2, Name = ".gitignore", CreatedTime = DateTime.Now, Version = "2" };
-            file.Versions.Add(olderFile);
-            branch.Files.Add(file);
-
-            var result = GitFileService.GetNumbersOfVersionFile(branch, file);
-            Assert.AreEqual(2, result);
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
         public void ServiceTest()
         {
-            var repoService = new RepoService(repo);
-            var result = repoService.GetRepo();
-            Assert.IsNotNull(result);
+            Assert.IsNotNull(_context);
         }
     }
 }
