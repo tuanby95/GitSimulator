@@ -24,14 +24,11 @@ namespace GitSimulator.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
+            #region repo
             modelBuilder.Entity<Repo>()
                 .HasOne(o => o.Owner)
                 .WithMany(c => c.Repositories);
-
-            modelBuilder.Entity<Branch>()
-                .HasOne(p => p.Owner)
-                .WithMany(c => c.Branches);
 
             modelBuilder.Entity<Repo>()
                 .HasMany(c => c.Branches)
@@ -40,6 +37,42 @@ namespace GitSimulator.DAL
             modelBuilder.Entity<Repo>()
                 .HasMany(o => o.InviteRequests)
                 .WithOne(c => c.Repository);
+
+            modelBuilder.Entity<Repo>()
+                .HasMany(o => o.InviteRequests)
+                .WithOne(i => i.Repository);
+
+            modelBuilder.Entity<Repo>()
+                .HasMany(o => o.RepoUsers)   
+                .WithOne(u => u.Repo)
+                .HasForeignKey(u => u.RepoId);
+
+
+            #endregion
+
+            #region user
+            modelBuilder.Entity<User>()
+              .HasMany(o => o.RepoUsers)
+              .WithOne(u => u.User)
+              .HasForeignKey(u => u.UserId);
+
+            modelBuilder.Entity<User>()
+              .HasMany(o => o.InviteRequests)
+              .WithOne(c => c.Receiver);
+
+            modelBuilder.Entity<User>()
+              .HasMany(o => o.PullRequests)
+              .WithOne(c => c.Owner);
+
+            modelBuilder.Entity<User>()
+                .HasMany(o => PullRequests)
+                .WithOne(c => c.Reviewer);
+
+            #endregion
+
+            modelBuilder.Entity<Branch>()
+                .HasOne(p => p.Owner)
+                .WithMany(c => c.Branches);
 
             modelBuilder.Entity<InviteRequest>()
                 .HasOne(o => o.Receiver)
@@ -53,9 +86,7 @@ namespace GitSimulator.DAL
                 .HasMany(o => o.Teams)
                 .WithOne(o => o.Organization);
 
-            modelBuilder.Entity<User>()
-                .HasMany(o => o.InviteRequests)
-                .WithOne(c => c.Receiver);
+          
 
             modelBuilder.Entity<Commit>()
                 .HasMany(o => o.Files)
@@ -65,13 +96,7 @@ namespace GitSimulator.DAL
                 .HasMany(o => o.Commits)
                 .WithOne(c => c.Branch);
 
-            modelBuilder.Entity<User>()
-                .HasMany(o => o.PullRequests)
-                .WithOne(c => c.Owner);
-
-            modelBuilder.Entity<User>()
-                .HasMany(o => PullRequests)
-                .WithOne(c => c.Reviewer);
+          
 
             modelBuilder.Entity<Commit>()
                 .HasOne(o => o.PullRequest)

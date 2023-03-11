@@ -10,6 +10,7 @@
         public HashSet<Team>? Teams { get; set; }
         public HashSet<Branch> Branches { get; set; }
         public HashSet<User> Contributors { get; set; }
+        public HashSet<RepoUser> RepoUsers { get; set; }
         public HashSet<GitFile> Files { get; set; }
         public HashSet<PullRequest>? PullRequests { get; set; }
         public HashSet<InviteRequest>? InviteRequests { get; set; }
