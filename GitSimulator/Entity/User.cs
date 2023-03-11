@@ -10,17 +10,17 @@
         public HashSet<PullRequest>? PullRequests { get; set; }
         public HashSet<Team>? Team { get; set; }
         public HashSet<Organization>? Organizations { get; set; }
-        public List<BranchUser> BranchUser { get; set; }
-        public List<RepoUser> RepoUsers { get; set; }
-        public List<OrgUser> OrgUsers { get; set; }
-        public List<TeamUser> TeamUsers { get; set; }
+        public HashSet<BranchUser> BranchUser { get; set; }
+        public HashSet<RepoUser> RepoUsers { get; set; }
+        public HashSet<OrgUser> OrgUsers { get; set; }
+        public HashSet<TeamUser> TeamUsers { get; set; }
 
         public User()
         {
-            RepoUsers = new List<RepoUser>();
-            BranchUser = new List<BranchUser>();
-            OrgUsers = new List<OrgUser>();
-            TeamUsers = new List<TeamUser>();
+            RepoUsers = new HashSet<RepoUser>();
+            BranchUser = new HashSet<BranchUser>();
+            OrgUsers = new HashSet<OrgUser>();
+            TeamUsers = new HashSet<TeamUser>();
         }
     }
 }

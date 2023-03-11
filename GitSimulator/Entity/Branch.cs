@@ -9,7 +9,7 @@
         public HashSet<Branch> SubBranches { get; set; }
         public HashSet<GitFile> Files { get; set; }
         public HashSet<Commit> Commits { get; set; }
-        public List<BranchUser> BranchUsers { get; set; }
+        public HashSet<BranchUser> BranchUsers { get; set; }
 
         public Branch()
         {
@@ -18,7 +18,7 @@
             SubBranches = new HashSet<Branch>();
             Files = new HashSet<GitFile>();
             Commits = new HashSet<Commit>();
-            BranchUsers = new List<BranchUser>();
+            BranchUsers = new HashSet<BranchUser>();
         }
     }
 }
