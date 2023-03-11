@@ -11,17 +11,17 @@
         public HashSet<Branch> Branches { get; set; }
         public HashSet<User> Contributors { get; set; }
         public HashSet<RepoUser> RepoUsers { get; set; }
-        public HashSet<GitFile> Files { get; set; }
         public HashSet<PullRequest>? PullRequests { get; set; }
         public HashSet<InviteRequest>? InviteRequests { get; set; }
 
         public Repo()
         {
             Owner = new User();
-            Contributors = new HashSet<User>();
-            Files = new HashSet<GitFile>();
-            Branches = new HashSet<Branch>();
             Organization= new Organization();
+            Branches = new HashSet<Branch>();
+            Contributors = new HashSet<User>();
+            RepoUsers = new HashSet<RepoUser>();
+            Contributors = new HashSet<User>();
         }
     }
 }

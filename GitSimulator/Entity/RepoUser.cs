@@ -9,8 +9,14 @@ namespace GitSimulator.Entity
     public class RepoUser
     {
         public int RepoId { get; set; }
-        public Repo Repo { get; set; }
+        public Repo Repository { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+
+        public RepoUser()
+        {
+            User = new User();
+            Repository = new Repo();
+        }
     }
 }

@@ -44,7 +44,7 @@ namespace GitSimulator.DAL
 
             modelBuilder.Entity<Repo>()
                 .HasMany(o => o.RepoUsers)   
-                .WithOne(u => u.Repo)
+                .WithOne(u => u.Repository)
                 .HasForeignKey(u => u.RepoId);
 
 
