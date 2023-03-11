@@ -47,7 +47,9 @@ namespace GitSimulator.DAL
                 .WithOne(u => u.Repository)
                 .HasForeignKey(u => u.RepoId);
 
-
+            modelBuilder.Entity<Repo>()
+                .HasMany(o => o.PullRequests)
+                .WithOne(c => c.Repository);
             #endregion
 
             #region user
@@ -67,7 +69,6 @@ namespace GitSimulator.DAL
             modelBuilder.Entity<User>()
                 .HasMany(o => PullRequests)
                 .WithOne(c => c.Reviewer);
-
             #endregion
 
             modelBuilder.Entity<Branch>()
@@ -85,6 +86,10 @@ namespace GitSimulator.DAL
             modelBuilder.Entity<Organization>()
                 .HasMany(o => o.Teams)
                 .WithOne(o => o.Organization);
+
+            modelBuilder.Entity<Organization>()
+                .HasMany(o => o.Repositories)
+                .WithOne(c => c.Organization);
 
           
 
