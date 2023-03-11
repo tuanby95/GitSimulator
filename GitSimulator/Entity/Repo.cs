@@ -13,7 +13,7 @@
         public HashSet<RepoUser> RepoUsers { get; set; }
         public HashSet<PullRequest>? PullRequests { get; set; }
         public HashSet<InviteRequest>? InviteRequests { get; set; }
-        public List<RepoTeam> RepoTeam { get; set;}
+        public List<RepoTeam> RepoTeams { get; set;}
 
         public Repo()
         {
@@ -23,7 +23,7 @@
             Contributors = new HashSet<User>();
             RepoUsers = new HashSet<RepoUser>();
             Contributors = new HashSet<User>();
-            RepoTeam = new List<RepoTeam> { };
+            RepoTeams = new List<RepoTeam> { };
         }
     }
 }
