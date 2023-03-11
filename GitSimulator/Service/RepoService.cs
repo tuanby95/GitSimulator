@@ -6,6 +6,11 @@ namespace GitSimulator.Service
 {
     public class RepoService
     {
-        
+        public IUnitOfWork  _unitOfWork;
+        public RepoService(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
     }
 }

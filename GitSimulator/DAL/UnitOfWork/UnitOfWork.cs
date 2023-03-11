@@ -9,24 +9,21 @@ using System.Threading.Tasks;
 
 namespace GitSimulator.DAL.UnitOfWork
 {
-    internal class UnitOfWork : IUnitOfWork
+    internal class UnitOfWork : IUnitOfWork, IDisposable
     {
-        public IRepoRepository RepoRepository { get; }
-
         private readonly GitContext _context;
-        private IDbContextTransaction _transaction;
         private bool _disposed;
-        private readonly string _errorMessage = string.Empty;
+        public IRepoRepository _repoRepository;
+        private IDbContextTransaction _transaction;
 
-        public UnitOfWork(GitContext context, IRepoRepository repoRepository)
+        public UnitOfWork(GitContext context)
         {
             _context = context;
-            RepoRepository = repoRepository;
         }
 
-        public GitContext Context
+        public IRepoRepository RepoRepository
         {
-            get { return _context; }
+            get { return _repoRepository = _repoRepository ?? new RepoRepository(_context); }
         }
 
         public void Commit()
@@ -36,7 +33,7 @@ namespace GitSimulator.DAL.UnitOfWork
 
         public void CreateTransaction()
         {
-            _transaction = Context.Database.BeginTransaction();
+            _transaction = _context.Database.BeginTransaction();
         }
 
         public void Dispose()
@@ -53,19 +50,13 @@ namespace GitSimulator.DAL.UnitOfWork
 
         public void Save()
         {
-            try
-            {
-                Context.SaveChanges();
-            }
-            catch (DbUpdateException dbEx)
-            {
-                throw new Exception($"{_errorMessage} {dbEx}");
-            }
+            _context.SaveChanges();
         }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed && disposing)
-                Context.Dispose();
+                _context.Dispose();
             _disposed = true;
         }
     }

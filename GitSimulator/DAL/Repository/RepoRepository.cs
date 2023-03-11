@@ -10,7 +10,7 @@ namespace GitSimulator.DAL.Repository
 {
     internal class RepoRepository : GenericRepository<Repo>, IRepoRepository
     {
-        public RepoRepository(IUnitOfWork<GitContext> ) : base()
+        public RepoRepository(GitContext context) : base(context)
         {
         }
     }

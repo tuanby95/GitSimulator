@@ -10,46 +10,39 @@ namespace GitSimulator.DAL.Repository
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        
-        public DbSet<TEntity> _entities;
-        public string _errorMessage = string.Empty;
+        protected readonly GitContext _context;
+        private readonly DbSet<TEntity> _entities;
 
         public GenericRepository(GitContext context)
         {
-            
+            _context = context;
+            _entities = _context.Set<TEntity>();
         }
-
-        public GenericRepository(IUnitOfWork unitOfWork)
-            : this(unitOfWork.Context)
-        {
-        }
-
 
         public void Create(TEntity entity)
         {
-            _entities.Add(entity);
+            _context.Add(entity);
         }
 
         public void Delete(TEntity entity)
         {
-            _entities.Remove(entity);
+            _context.Remove(entity);
         }
 
         public IQueryable<TEntity> GetAll()
         {
-            return _entities;
+            return _entities.AsQueryable();
         }
 
         public TEntity GetById(int id)
         {
-            return _entities.FirstOrDefault(e => e.Equals(id));
+            return _entities.Find(id);
         }
 
         public void Update(TEntity entity)
         {
             _entities.Attach(entity);
-            _entities.Entry(entity).State = EntityState.Modified;
+            _context.Entry(entity).State = EntityState.Modified;
         }
-
     }
 }

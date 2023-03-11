@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace GitSimulator.DAL.UnitOfWork
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork
     {
-        GitContext Context { get; }
         void CreateTransaction();
         void Commit();
         void Rollback();

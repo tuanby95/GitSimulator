@@ -1,5 +1,7 @@
 using Azure.Core;
 using GitSimulator.DAL;
+using GitSimulator.DAL.Repository;
+using GitSimulator.DAL.UnitOfWork;
 using GitSimulator.Entity;
 using GitSimulator.Service;
 using Microsoft.EntityFrameworkCore;
@@ -133,7 +135,10 @@ namespace GitSimulator
         [TestMethod]
         public void ServiceTest()
         {
-            Assert.IsNotNull(_context);
+            var uow = new UnitOfWork(_context);
+            var repoService = new RepoService(uow);
+            var repoRepository = new GenericRepository<Repo>(_context);
+            
         }
     }
 }
