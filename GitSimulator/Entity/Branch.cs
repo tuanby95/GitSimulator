@@ -4,9 +4,7 @@
     {
         public int Id { get; set; }
         public string? BranchName { get; set; }
-        public int OwnerId { get; set; }
         public User Owner { get; set; }
-        public int RepoId { get; set; }
         public HashSet<Branch> SubBranches { get; set; }
         public HashSet<GitFile> Files { get; set; }
         public HashSet<Commit> Commits { get; set; }

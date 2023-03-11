@@ -32,23 +32,19 @@ namespace GitSimulator.DAL
 
             modelBuilder.Entity<Branch>()
                 .HasOne(p => p.Owner)
-                .WithMany(c => c.Branches)
-                .HasForeignKey(k => k.OwnerId);
+                .WithMany(c => c.Branches);
 
             modelBuilder.Entity<Branch>()
                 .HasOne(o => o.Repository)
-                .WithMany(c => c.Branches)
-                .HasForeignKey(k => k.RepoId);
+                .WithMany(c => c.Branches);
 
             modelBuilder.Entity<InviteRequest>()
                 .HasOne(o => o.Repository)
-                .WithMany(c => c.InviteRequests)
-                .HasForeignKey(k => k.RepoId);
+                .WithMany(c => c.InviteRequests);
 
             modelBuilder.Entity<InviteRequest>()
                 .HasOne(o => o.Receiver)
-                .WithMany(c => c.InviteRequests)
-                .HasForeignKey(k => k.ReceiverId);
+                .WithMany(c => c.InviteRequests);
 
             modelBuilder.Entity<User>()
                 .HasMany(o => o.Repositories)

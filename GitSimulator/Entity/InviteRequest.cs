@@ -3,11 +3,9 @@
     public class InviteRequest
     {
         public int Id { get; set; }
-        public int RepoId { get; set; }
-        public int ReceiverId { get; set; }
-        public User Receiver { get; set; }
         public bool Status { get; set; }
         public DateTime CreateTime { get; set; }
+        public User Receiver { get; set; }
         public Repo Repository { get; set; }
         public InviteRequest()
         {
