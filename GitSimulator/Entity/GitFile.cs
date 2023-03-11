@@ -6,13 +6,17 @@
         public string? Name { get; set; }
         public string? Type { get; set; }
         public DateTime CreatedTime { get; set; }
-        public HashSet<GitFile> FileVersions { get; set; }
         public Commit Commit { get; set; }
+        public HashSet<Branch> Branch { get; set; }
+        public HashSet<GitFile> FileVersions { get; set; }
+        public HashSet<BranchFile> BranchFiles { get; set; }
 
         public GitFile()
         {
-            FileVersions = new HashSet<GitFile>();
             Commit = new Commit();
+            Branch = new HashSet<Branch>();
+            FileVersions = new HashSet<GitFile>();
+            BranchFiles = new HashSet<BranchFile>();
         }
     }
 }

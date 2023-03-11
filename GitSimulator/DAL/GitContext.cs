@@ -102,14 +102,53 @@ namespace GitSimulator.DAL
                 .WithOne(c => c.Reviewer);
             #endregion
 
+            #region TeamUser
+            modelBuilder.Entity<TeamUser>()
+                .HasKey(tu => new { tu.UserId, tu.TeamId });
+
+            modelBuilder.Entity<TeamUser>()
+                .HasOne(o => o.Team)
+                .WithMany(c => c.TeamUsers)
+                .HasForeignKey(k => k.TeamId);
+
+            modelBuilder.Entity<TeamUser>()
+                .HasOne(o => o.User)
+                .WithMany(o => o.TeamUsers)
+                .HasForeignKey(k => k.UserId);
+            #endregion
+
+            #region Branch
             modelBuilder.Entity<Branch>()
                 .HasOne(p => p.Owner)
                 .WithMany(c => c.Branches);
 
+            modelBuilder.Entity<Branch>()
+                .HasMany(o => o.Commits)
+                .WithOne(c => c.Branch);
+            #endregion
+
+            #region BranchFiles
+            modelBuilder.Entity<BranchFile>()
+                .HasKey(bf => new { bf.FileId, bf.BranchId });
+
+            modelBuilder.Entity<BranchFile>()
+                .HasOne(o => o.Branch)
+                .WithMany(c => c.BranchFiles)
+                .HasForeignKey(k => k.BranchId);
+            
+            modelBuilder.Entity<BranchFile>()
+                .HasOne(o => o.File)
+                .WithMany(c => c.BranchFiles)
+                .HasForeignKey(k => k.FileId);
+            #endregion
+
+            #region InviteRequest
             modelBuilder.Entity<InviteRequest>()
                 .HasOne(o => o.Receiver)
                 .WithMany(c => c.InviteRequests);
+            #endregion
 
+            #region Organization
             modelBuilder.Entity<Organization>()
                 .HasOne(o => o.Owner)
                 .WithMany(c => c.Organizations);
@@ -121,21 +160,50 @@ namespace GitSimulator.DAL
             modelBuilder.Entity<Organization>()
                 .HasMany(o => o.Repositories)
                 .WithOne(c => c.Organization);
+            #endregion
 
+            #region OrgUser
+            modelBuilder.Entity<OrgUser>()
+                .HasKey(ou => new { ou.OrgId, ou.UserId });
+
+            modelBuilder.Entity<OrgUser>()
+                .HasOne(c => c.Organization)
+                .WithMany(o => o.OrgUsers)
+                .HasForeignKey(k => k.OrgId);
+
+            modelBuilder.Entity<OrgUser>()
+                .HasOne(c => c.User)
+                .WithMany(o => o.OrgUsers)
+                .HasForeignKey(k => k.UserId);
+            #endregion
+
+            #region Commit
             modelBuilder.Entity<Commit>()
                 .HasMany(o => o.Files)
                 .WithOne(c => c.Commit);
+            #endregion
 
-            modelBuilder.Entity<Branch>()
+            #region PullRequest
+            modelBuilder.Entity<PullRequest>()
+                .HasOne(o => o.Owner)
+                .WithMany(c => c.PullRequests);
+
+            modelBuilder.Entity<PullRequest>()
+                .HasOne(o => o.Reviewer)
+                .WithMany(c => c.PullRequests);
+
+            modelBuilder.Entity<PullRequest>()
                 .HasMany(o => o.Commits)
-                .WithOne(c => c.Branch);
+                .WithOne(c => c.PullRequest);
 
+            modelBuilder.Entity<PullRequest>()
+                .HasOne(o => o.ToBranch)
+                .WithOne(c => c.PullRequest);
 
-
-            modelBuilder.Entity<Commit>()
-                .HasOne(o => o.PullRequest)
-                .WithMany(c => c.Commits);
-
+            modelBuilder.Entity<PullRequest>()
+                .HasOne(o => o.FromBranch)
+                .WithOne(c => c.PullRequest);
+            #endregion
         }
     }
 }

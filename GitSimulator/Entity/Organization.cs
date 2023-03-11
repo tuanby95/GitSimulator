@@ -13,12 +13,12 @@ namespace GitSimulator.Entity
         public User Owner { get; set; }
         public HashSet<Repo>? Repositories { get; set; }
         public HashSet<Team>? Teams { get; set; }
-        public List<OrgUser> OrgUsers { get; set; }
+        public HashSet<OrgUser> OrgUsers { get; set; }
 
         public Organization()
         {
             Owner = new User();
-            OrgUsers = new List<OrgUser>();
+            OrgUsers = new HashSet<OrgUser>();
         }
     }
 }
