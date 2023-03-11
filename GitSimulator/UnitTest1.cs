@@ -52,15 +52,7 @@ namespace GitSimulator
         [TestMethod]
         public void InviteMemberTest()
         {
-            //var repoId = _context.Repositories.FirstOrDefault(e => e.Id.Equals(1));
-            //var userName = _context.Users.FirstOrDefault(e => e.Id.Equals(1));
-            
-
-            ////Call InviteMember method in Reposervice
-            //var repo = new RepoService();
-            //var result = repo.InviteMember(repoId, userName);
-
-            //Assert.AreEqual(result.Count, 1);
+            Assert.IsNotNull(_context);
         }
 
         [TestMethod]
