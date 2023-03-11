@@ -11,6 +11,7 @@
         public HashSet<Team>? Team { get; set; }
         public HashSet<Organization>? Organizations { get; set; }
         public List<RepoUser> RepoUsers { get; set; }
+        public HashSet<BranchUser> BranchUsers { get; set; }
 
         public User()
         {

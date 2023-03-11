@@ -9,6 +9,8 @@
         public HashSet<GitFile> Files { get; set; }
         public HashSet<Commit> Commits { get; set; }
         public Repo Repository { get; set; }
+        public HashSet<BranchUser> BranchUsers { get; set; }
+
 
         public Branch()
         {
