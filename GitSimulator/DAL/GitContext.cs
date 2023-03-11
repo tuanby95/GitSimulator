@@ -24,8 +24,7 @@ namespace GitSimulator.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            //reverse all
+            
             modelBuilder.Entity<Repo>()
                 .HasOne(o => o.Owner)
                 .WithMany(c => c.Repositories);
@@ -34,21 +33,50 @@ namespace GitSimulator.DAL
                 .HasOne(p => p.Owner)
                 .WithMany(c => c.Branches);
 
-            modelBuilder.Entity<Branch>()
-                .HasOne(o => o.Repository)
-                .WithMany(c => c.Branches);
+            modelBuilder.Entity<Repo>()
+                .HasMany(c => c.Branches)
+                .WithOne(o => o.Repository);
 
-            modelBuilder.Entity<InviteRequest>()
-                .HasOne(o => o.Repository)
-                .WithMany(c => c.InviteRequests);
+            modelBuilder.Entity<Repo>()
+                .HasMany(o => o.InviteRequests)
+                .WithOne(c => c.Repository);
 
             modelBuilder.Entity<InviteRequest>()
                 .HasOne(o => o.Receiver)
                 .WithMany(c => c.InviteRequests);
 
+            modelBuilder.Entity<Organization>()
+                .HasOne(o => o.Owner)
+                .WithMany(c => c.Organizations);
+
+            modelBuilder.Entity<Organization>()
+                .HasMany(o => o.Teams)
+                .WithOne(o => o.Organization);
+
             modelBuilder.Entity<User>()
-                .HasMany(o => o.Repositories)
-                .WithMany(c => c.Contributors);
+                .HasMany(o => o.InviteRequests)
+                .WithOne(c => c.Receiver);
+
+            modelBuilder.Entity<Commit>()
+                .HasMany(o => o.Files)
+                .WithOne(c => c.Commit);
+
+            modelBuilder.Entity<Branch>()
+                .HasMany(o => o.Commits)
+                .WithOne(c => c.Branch);
+
+            modelBuilder.Entity<User>()
+                .HasMany(o => o.PullRequests)
+                .WithOne(c => c.Owner);
+
+            modelBuilder.Entity<User>()
+                .HasMany(o => PullRequests)
+                .WithOne(c => c.Reviewer);
+
+            modelBuilder.Entity<Commit>()
+                .HasOne(o => o.PullRequest)
+                .WithMany(c => c.Commits);
+
         }
     }
 }
