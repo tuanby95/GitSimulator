@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GitSimulator.Entity
 {
-    internal class RepoTeam
+    public class RepoTeam
     {
         public int Id { get; set; }
         public int RepositoryId { get; set; }
