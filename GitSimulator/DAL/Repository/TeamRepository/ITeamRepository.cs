@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GitSimulator.DAL.Repository
+namespace GitSimulator.DAL.Repository.TeamRepository
 {
-    public interface IRepoRepository : IGenericRepository<Repo>
+    internal interface ITeamRepository : IGenericRepository<Team>
     {
     }
 }

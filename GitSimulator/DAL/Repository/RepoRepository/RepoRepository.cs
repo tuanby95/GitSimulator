@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GitSimulator.DAL.Repository
+namespace GitSimulator.DAL.Repository.RepoRepository
 {
     public class RepoRepository : GenericRepository<Repo>, IRepoRepository
     {

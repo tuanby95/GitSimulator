@@ -4,6 +4,7 @@ using GitSimulator.DAL.Repository;
 using GitSimulator.DAL.UnitOfWork;
 using GitSimulator.Entity;
 using GitSimulator.Service;
+using GitSimulator.Service.RepoService;
 using Microsoft.EntityFrameworkCore;
 
 namespace GitSimulator

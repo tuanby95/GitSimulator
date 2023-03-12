@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GitSimulator.Service
 {
-    internal interface IBaseService<TEntity> where TEntity : class
+    public interface IBaseService<TEntity> where TEntity : class
     {
         IQueryable<TEntity> GetAll();
         TEntity GetById(int id);

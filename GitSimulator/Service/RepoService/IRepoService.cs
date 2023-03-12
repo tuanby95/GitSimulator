@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GitSimulator.Service
+namespace GitSimulator.Service.RepoService
 {
-    internal interface IRepoService : IBaseService<Repo>
+    public interface IRepoService : IBaseService<Repo>
     {
     }
 }
