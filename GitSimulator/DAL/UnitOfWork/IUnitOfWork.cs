@@ -1,4 +1,5 @@
 ﻿using GitSimulator.DAL.Repository;
+using GitSimulator.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,8 @@ namespace GitSimulator.DAL.UnitOfWork
 {
     public interface IUnitOfWork
     {
+        IGenericRepository<Team> TeamRepository { get; }
+        IGenericRepository<User> UserRepository { get; }
         IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
         void CreateTransaction();
         void Commit();

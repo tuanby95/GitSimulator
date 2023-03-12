@@ -5,6 +5,7 @@ using GitSimulator.DAL.UnitOfWork;
 using GitSimulator.Entity;
 using GitSimulator.Service;
 using GitSimulator.Service.RepoService;
+using GitSimulator.Service.TeamService;
 using Microsoft.EntityFrameworkCore;
 
 namespace GitSimulator
@@ -20,6 +21,7 @@ namespace GitSimulator
             var options = new DbContextOptionsBuilder<GitContext>()
                 .UseInMemoryDatabase(databaseName: "GitDatabase")
                 .Options;
+
             _context = new GitContext(options);
 
             _context.Users.AddRange(new List<User>
@@ -64,6 +66,16 @@ namespace GitSimulator
             //Create org
             //Add team into org
             //org can assign team to a repo
+            string name = "New team";
+            string description = "Lorem ipsum";
+            int creatorId = 1;
+            var uow = new UnitOfWork(_context);
+            var teamService = new TeamService(uow);
+
+            Team newTeam = teamService.CreateTeam(creatorId, name, description);
+
+            Assert.AreEqual(creatorId, newTeam.Members.FirstOrDefault().Id);
+
             Assert.IsNotNull(_context);
         }
 
@@ -138,8 +150,9 @@ namespace GitSimulator
         {
             var uow = new UnitOfWork(_context);
             var repo = new RepoService(uow);
-            
-            Assert.IsNotNull(_context);
+            var user = uow.UserRepository.GetAll();
+
+            Assert.IsNotNull(user);
         }
     }
 }

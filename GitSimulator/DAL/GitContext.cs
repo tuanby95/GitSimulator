@@ -21,6 +21,14 @@ namespace GitSimulator.DAL
         public DbSet<InviteRequest> InviteRequests { get; set; }
         public DbSet<Team> Teams { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+
+            //optionsBuilder.UseSqlite("Data Source = sqlite.db");
+            optionsBuilder.UseInMemoryDatabase("GitDatabase");
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

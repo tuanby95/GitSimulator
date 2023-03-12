@@ -1,4 +1,7 @@
 ﻿using GitSimulator.DAL.Repository;
+using GitSimulator.DAL.Repository.TeamRepository;
+using GitSimulator.DAL.Repository.UserRepository;
+using GitSimulator.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -16,6 +19,31 @@ namespace GitSimulator.DAL.UnitOfWork
         private bool _disposed;
         private Hashtable _repositories;
         private IDbContextTransaction _transaction;
+        public IGenericRepository<Team> teamRepository;
+        public IGenericRepository<User> userRepository;
+
+        public IGenericRepository<Team> TeamRepository
+        {
+            get
+            {
+                if (teamRepository != null)
+                {
+                    teamRepository = new TeamRepository(_context);
+                }
+                return teamRepository;
+            }
+        }
+        public IGenericRepository<User> UserRepository
+        {
+            get
+            {
+                if (userRepository != null)
+                {
+                    userRepository = new UserRepository(_context);
+                }
+                return userRepository;
+            }
+        }
 
         public UnitOfWork(GitContext context)
         {
