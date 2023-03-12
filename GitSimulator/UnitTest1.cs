@@ -136,8 +136,9 @@ namespace GitSimulator
         public void ServiceTest()
         {
             var uow = new UnitOfWork(_context);
-            var repoService = new RepoService(uow);
-            var repoRepository = new GenericRepository<Repo>(_context);
+            var repo = new RepoService(uow);
+            
+            Assert.IsNotNull(_context);
         }
     }
 }

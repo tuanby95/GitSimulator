@@ -1,16 +1,16 @@
 ﻿using GitSimulator.DAL.Repository;
 using GitSimulator.DAL.UnitOfWork;
 using GitSimulator.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace GitSimulator.Service
 {
-    public class RepoService
+    public class RepoService : BaseService<Repo>, IRepoService
     {
-        public IUnitOfWork  _unitOfWork;
-        public RepoService(IUnitOfWork unitOfWork)
+        
+        public RepoService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _unitOfWork = unitOfWork;
+            
         }
-
     }
 }

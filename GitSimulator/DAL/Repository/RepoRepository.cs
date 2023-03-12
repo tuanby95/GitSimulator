@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GitSimulator.DAL.Repository
 {
-    internal class RepoRepository : GenericRepository<Repo>, IRepoRepository
+    public class RepoRepository : GenericRepository<Repo>, IRepoRepository
     {
         public RepoRepository(GitContext context) : base(context)
         {
